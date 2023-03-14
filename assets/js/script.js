@@ -59,12 +59,13 @@ const updateTimeBlocks = () => {
 //This takes the plans and stores them in locaStorage
 const savePlan = (e) => {
   const id = e.target.parentElement.getAttribute('id');
-  const text = e.target.parentElement.querySelector('textarea').value
-console.log(text)
-  if(text === null || text === undefined){
+  const text = e.target.parentElement.querySelector('textarea').value.trim()
+console.log(text.textContent)
+  if(text === null || text === undefined || text === ''){
     alert('Fill out event before saving')
   } else {
-    localStorage.setItem(id, text.trim())
+    localStorage.setItem(id, text)
+    console.log(text)
   }
 }
 //adds an event listener to each saveButton to execute savePlan function
