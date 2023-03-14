@@ -1,11 +1,15 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-let currentDay = dayjs().format('dddd MMM D, YYYY')
-let currentDayEl = $('#currentDay')
-currentDayEl.text(currentDay)
+let dplannerContainer = document.querySelector('#timeBlock-container')
 
-const plannerContainer = $(".container-fluid")
+
+let currentDay = dayjs()
+let currentDayEl = $('#currentDay')
+currentDayEl.text(currentDay.format('dddd MMM D, YYYY'))
+
+const plannerContainer = $("#timeBlock-container")
+const plannerChildren = plannerContainer.children()
 $(function () {
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
@@ -50,4 +54,34 @@ $(function () {
     saveButton.append(i)
   }
 
-  generateTimeBlock()
+const updateTimeBlocks = () => {
+
+
+  var timeInterval = setInterval(function () {
+   
+
+    for(let i = 0; i < plannerChildren.length; i++){
+      if (plannerChildren[i].getAttribute('id') < currentDay.format('HH')) {
+        plannerChildren[i].addClass('row time-block past')
+      } else if (plannerChildren[i].getAttribute('id') < currentDay.format('HH')) {
+        plannerChildren[i].addClass('row time-block future')
+      } else {
+        plannerChildren[i].addClass('row time-block present')
+      }
+    }
+
+  }, 1000);
+}
+
+
+
+console.log(plannerChildren[0])
+
+console.log(plannerChildren[0].getAttribute('id'))
+
+
+
+
+  console.log(dayjs().format('HH') )
+  console.log(dayjs().format('HH') < '12') 
+
