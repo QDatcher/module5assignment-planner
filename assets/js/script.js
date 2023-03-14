@@ -97,14 +97,14 @@ for(let i = 0; i < plannerChildren.length; i++){
   button.addEventListener('click', savePlan)
 }
 
-// for(let i = 0; i < plannerChildren.length; i++){
-//   const textBox = plannerChildren[i].querySelector('textarea');
-//   const currentID = plannerChildren[i].getAttribute('id');
-//   const event = localStorage.getItem(currentID)
-//   if(event){
-//     textBox.text(event)
-//   }
-// }
+for(let i = 0; i < plannerChildren.length; i++){
+  const textBox = plannerChildren[i].querySelector('textarea');
+  const currentID = plannerChildren[i].getAttribute('id');
+  const event = localStorage.getItem(currentID)
+  if(event){
+    textBox.value = event;
+  }
+}
 
 
 
