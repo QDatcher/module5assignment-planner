@@ -2,7 +2,7 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 let dplannerContainer = document.querySelector('#timeBlock-container')
-
+// const listOfEvents = localStorage.
 
 let currentDay = dayjs()
 let currentDayEl = $('#currentDay')
@@ -31,7 +31,7 @@ $(function () {
     // TODO: Add code to display the current date in the header of the page.
   });
   
-  const generateTimeBlock = () => {
+const generateTimeBlock = () => {
     var timeBlock = $('<div>');
     timeBlock.addClass('row time-block');
     var timeLabel = $('<div>')
@@ -52,7 +52,7 @@ $(function () {
     timeBlock.append(textBox)
     timeBlock.append(saveButton)
     saveButton.append(i)
-  }
+}
 
 const updateTimeBlocks = () => {
 
@@ -62,26 +62,57 @@ const updateTimeBlocks = () => {
 
     for(let i = 0; i < plannerChildren.length; i++){
       if (plannerChildren[i].getAttribute('id') < currentDay.format('HH')) {
-        plannerChildren[i].addClass('row time-block past')
-      } else if (plannerChildren[i].getAttribute('id') < currentDay.format('HH')) {
-        plannerChildren[i].addClass('row time-block future')
+        plannerChildren[i].classList.remove('present')
+        plannerChildren[i].classList.remove('future')
+        plannerChildren[i].classList.add('past')
+      } else if (plannerChildren[i].getAttribute('id') > currentDay.format('HH')) {
+        plannerChildren[i].classList.remove('present')
+        plannerChildren[i].classList.remove('past')
+        plannerChildren[i].classList.add('future')
       } else {
-        plannerChildren[i].addClass('row time-block present')
+        plannerChildren[i].classList.remove('future')
+        plannerChildren[i].classList.remove('past')
+        plannerChildren[i].classList.add('present')
       }
     }
 
-  }, 1000);
+  }, 1);
 }
 
+const savePlan = (e) => {
+  const id = e.target.parentElement.getAttribute('id');
+  const text = e.target.parentElement.querySelector('textarea').value
+
+  if(text == null || text == undefined){
+    alert('Fill out event before saving')
+  } else {
+    localStorage.setItem(id, text.trim())
+  }
+}
+
+for(let i = 0; i < plannerChildren.length; i++){
+
+  const button = plannerChildren[i].querySelector('button')
+  console.log(button)
+  button.addEventListener('click', savePlan)
+}
+
+// for(let i = 0; i < plannerChildren.length; i++){
+//   const textBox = plannerChildren[i].querySelector('textarea');
+//   const currentID = plannerChildren[i].getAttribute('id');
+//   const event = localStorage.getItem(currentID)
+//   if(event){
+//     textBox.text(event)
+//   }
+// }
 
 
-console.log(plannerChildren[0])
-
-console.log(plannerChildren[0].getAttribute('id'))
 
 
 
+console.log(plannerChildren[0].querySelector('textarea').value)
 
-  console.log(dayjs().format('HH') )
-  console.log(dayjs().format('HH') < '12') 
+updateTimeBlocks()
+console.log(plannerChildren[0].classList.remove())
 
+console.log(localStorage.getItem('js'))
