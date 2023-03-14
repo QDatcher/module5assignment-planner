@@ -1,36 +1,13 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-let dplannerContainer = document.querySelector('#timeBlock-container')
-// const listOfEvents = localStorage.
-
+//Some basic code to access the needed elements and get the current date/time
 let currentDay = dayjs()
 let currentDayEl = $('#currentDay')
 currentDayEl.text(currentDay.format('dddd MMM D, YYYY'))
-
+let dplannerContainer = document.querySelector('#timeBlock-container')
 const plannerContainer = $("#timeBlock-container")
 const plannerChildren = plannerContainer.children()
-$(function () {
-    // TODO: Add a listener for click events on the save button. This code should
-    // use the id in the containing time-block as a key to save the user input in
-    // local storage. HINT: What does `this` reference in the click listener
-    // function? How can DOM traversal be used to get the "hour-x" id of the
-    // time-block containing the button that was clicked? How might the id be
-    // useful when saving the description in local storage?
-    //
-    // TODO: Add code to apply the past, present, or future class to each time
-    // block by comparing the id to the current hour. HINTS: How can the id
-    // attribute of each time-block be used to conditionally add or remove the
-    // past, present, and future classes? How can Day.js be used to get the
-    // current hour in 24-hour time?
-    //
-    // TODO: Add code to get any user input that was saved in localStorage and set
-    // the values of the corresponding textarea elements. HINT: How can the id
-    // attribute of each time-block be used to do this?
-    //
-    // TODO: Add code to display the current date in the header of the page.
-  });
-  
+
+
+//Was gonna go for bonus points by making overtime blocks but I gotta turn this in lol
 const generateTimeBlock = () => {
     var timeBlock = $('<div>');
     timeBlock.addClass('row time-block');
@@ -53,10 +30,10 @@ const generateTimeBlock = () => {
     timeBlock.append(saveButton)
     saveButton.append(i)
 }
-
+//This is the function that updates the css class displaying if the time block is past present or future
 const updateTimeBlocks = () => {
 
-
+//loops through the timeBlocks (plannerChildren) every millisecond (i believe) checking the current hour to the id of the hour block
   var timeInterval = setInterval(function () {
    
 
@@ -79,17 +56,18 @@ const updateTimeBlocks = () => {
   }, 1);
 }
 
+//This takes the plans and stores them in locaStorage
 const savePlan = (e) => {
   const id = e.target.parentElement.getAttribute('id');
   const text = e.target.parentElement.querySelector('textarea').value
-
-  if(text == null || text == undefined){
+console.log(text)
+  if(text === null || text === undefined){
     alert('Fill out event before saving')
   } else {
     localStorage.setItem(id, text.trim())
   }
 }
-
+//adds an event listener to each saveButton to execute savePlan function
 for(let i = 0; i < plannerChildren.length; i++){
 
   const button = plannerChildren[i].querySelector('button')
@@ -97,6 +75,7 @@ for(let i = 0; i < plannerChildren.length; i++){
   button.addEventListener('click', savePlan)
 }
 
+//Loads the saved plans to their respective timeblocks they were saved to from the localStorage
 for(let i = 0; i < plannerChildren.length; i++){
   const textBox = plannerChildren[i].querySelector('textarea');
   const currentID = plannerChildren[i].getAttribute('id');
@@ -110,9 +89,5 @@ for(let i = 0; i < plannerChildren.length; i++){
 
 
 
-console.log(plannerChildren[0].querySelector('textarea').value)
 
 updateTimeBlocks()
-console.log(plannerChildren[0].classList.remove())
-
-console.log(localStorage.getItem('js'))
